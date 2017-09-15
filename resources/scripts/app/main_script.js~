@@ -1,0 +1,88 @@
+function clock(){
+    var d = new Date();
+    var h = d.getHours();
+    var m = d.getMinutes();
+    var s = d.getSeconds();
+    $('.clock').text(h+' : '+m);
+    setTimeout(clock, 500);
+}
+
+function Icon(colour, letter, link, name){
+    this.html = "<div class = 'general_icon icon_{0} icon_{1}'>{2}</div>".replace("{0}",colour).replace("{1}",name).replace("{2}",letter);
+    this.class_name = "icon_{0}".replace("{0}", name);
+    this.add_function = function(){
+        $(".main_content").insertAt(0, this.html);
+    }
+}
+
+
+$(document).ready(function(){
+    ic = new Icon("red", "P", "nesto", "ikona");
+    ic.add_function();
+    console.log(ic.html)
+    $(this).bind("contextmenu", function(e) {
+        e.preventDefault();
+    });
+    
+    clock();
+
+    $(".dropdown_options").hide();
+
+    $(".main_content").contextmenu(function(event){
+        $(".dropdown_options").hide();
+        $(".dropdown_options").slideDown(200);
+        var option_size = Number($(".general_option").css("height").replace("px",""));
+        var list_size = $(".dropdown_options").children().length/2;
+        var new_top = String(event.pageY-270+option_size*(list_size)+option_size/2)+"px";
+        var new_left = String(event.pageX-90)+"px";
+        $(".dropdown_options").css("top",new_top);
+        $(".dropdown_options").css("left",new_left);
+    	console.log(event.pageY);
+		console.log(event.pageX);
+    })
+
+
+
+    $(document).mousemove(function(event){
+    })
+    
+    var icon_move = 3;
+    $('.general_icon').mouseenter(function(){
+        var left = $(this).css("left");
+        var top = $(this).css("top");
+        left = Number(left.replace('px',''))-icon_move;
+        top = Number(top.replace('px',''))-icon_move;
+        $(this).css("left", (String(left)+"px"));
+        $(this).css("top", (String(top)+"px"));
+    })
+
+        $('.general_icon').mouseleave(function(){
+        var left = $(this).css("left");
+        var top = $(this).css("top");
+        left = Number(left.replace('px',''))+icon_move;
+        top = Number(top.replace('px',''))+icon_move;
+        $(this).css("left", (String(left)+"px"));
+        $(this).css("top", (String(top)+"px"));
+    })
+
+    $('.general_icon').mousedown(function(){
+        var left = $(this).css("left");
+        var top = $(this).css("top");
+        left = Number(left.replace('px',''))+icon_move;
+        top = Number(top.replace('px',''))+icon_move;
+        $(this).css("left", (String(left)+"px"));
+        $(this).css("top", (String(top)+"px"));
+    })
+
+        $('.general_icon').mouseup(function(){
+        var left = $(this).css("left");
+        var top = $(this).css("top");
+        left = Number(left.replace('px',''))-icon_move;
+        top = Number(top.replace('px',''))-icon_move;
+        $(this).css("left", (String(left)+"px"));
+        $(this).css("top", (String(top)+"px"));
+        setTimeout(window.open("https://www.youtube.com/","CHMAR"),100);
+    })
+
+
+})
